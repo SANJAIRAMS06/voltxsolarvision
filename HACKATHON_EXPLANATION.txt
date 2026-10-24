@@ -1,0 +1,92 @@
+VOLT X SOLAR VISION — EASY HACKATHON EXPLANATION
+=================================================
+
+1. WHAT DOES THE PROJECT DO?
+It compares expected solar generation with actual generation, calculates the energy gap,
+and displays a warning if the shortfall reaches 15% or more. It records user-reported
+equipment observations and suggests checks without using weather as the diagnosis.
+
+Example:
+Expected = 20 kWh
+Actual = 14 kWh
+Energy gap = 20 - 14 = 6 kWh
+Shortfall = (6 / 20) * 100 = 30%
+Performance = (14 / 20) * 100 = 70%
+
+2. WHAT TO SHOW THE JUDGES
+A. Open Overview and explain the four summary cards.
+B. Show the chart comparing expected and actual generation.
+C. Go to Diagnostics.
+D. Enter expected 20 and actual 14.
+E. Tick one observation, such as dust visible, and submit.
+F. Explain that the page suggests checking panel cleanliness; it does not claim that dust is
+   definitely responsible for all lost generation.
+G. Open Generation readings to show the saved demo entry.
+H. Open Reports and download the CSV.
+I. Show Settings to explain the planned Java and MySQL connection.
+
+3. WHAT EACH FILE DOES
+index.html
+- Creates the page layout, navigation, metric cards, form fields, chart container, alert areas
+  and buttons.
+- Links style.css and app.js.
+
+style.css
+- Defines colors, spacing, typography, card layout, charts, responsive mobile view and sidebar.
+- It controls appearance, not the energy calculations.
+
+app.js
+- Reads the form values.
+- Calculates energy loss, percentage shortfall and performance.
+- Creates alerts and rule-based suggestions from the recorded checkboxes.
+- Updates the cards, chart and readings table.
+- Saves demo readings in browser localStorage and exports a CSV report.
+- localStorage is only browser storage; it is not MySQL.
+
+4. FRONTEND VS BACKEND VS DATABASE
+Frontend = HTML, CSS and JavaScript. It is what the judge sees and clicks.
+Backend = Java. It should later validate inputs, calculate results and enforce login/admin permissions.
+Database = MySQL. It should later store accounts, readings, timestamps and alerts.
+This frontend demo currently works without the Java backend or MySQL.
+
+5. IMPORTANT HONEST LIMITATIONS
+- Demo readings are not live inverter measurements.
+- The visual role switch is not real authentication.
+- The data is stored in this browser only, not MySQL.
+- Checkbox observations are user-reported, not sensor-confirmed faults.
+- The 15% threshold is a prototype setting that must be validated for each solar installation.
+- Weather data is not used to determine the diagnostic cause.
+- For a confirmed diagnosis, integrate inverter fault codes, DC/AC voltage/current, string-level
+  measurements, irradiance or other appropriate equipment data, and validate the rules.
+
+6. SHORT PRESENTATION SCRIPT
+"Good morning, respected judges. Our project is VoltX Solar Vision, a solar generation
+performance monitoring prototype. It compares expected and actual energy generation and
+calculates the energy shortfall. When generation is below the selected threshold, it creates
+an alert and uses recorded equipment observations to suggest the next checks. It does not
+depend on weather to guess the cause. This version demonstrates the frontend with sample data.
+Our next step is to connect Java for secure processing and MySQL for persistent storage, then
+integrate real inverter or meter data to validate the diagnosis. Thank you."
+
+7. COMMON JUDGE QUESTIONS
+Q: Is it connected to a real solar panel?
+A: Not in this demo. It currently uses entered sample readings; live inverter integration is planned.
+
+Q: Does it use AI?
+A: No. This frontend demo uses transparent arithmetic and predefined rules, not a trained AI model.
+
+Q: How do you know the cause is dust?
+A: The user records an observation. The system suggests checking dust; it cannot confirm dust caused
+the full loss without suitable measurements.
+
+Q: Why not depend on weather?
+A: Weather can influence generation, but weather alone cannot confirm faults such as an inverter
+warning, shading, dirty panels or a connection issue. The diagnostic decision uses recorded readings
+and equipment observations instead.
+
+Q: Is data stored in MySQL?
+A: Not in this frontend-only demo. Demo records use browser localStorage. The next stage connects
+the Java backend to MySQL.
+
+Q: Is the admin switch secure?
+A: No. It is a visual demonstration only. Real admin permissions must be enforced by the Java backend.

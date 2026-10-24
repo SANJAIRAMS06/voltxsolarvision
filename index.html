@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VoltX Solar Vision | Solar Performance</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section class="login-screen" id="loginScreen" aria-labelledby="loginTitle">
+    <div class="login-art"><div class="login-brand"><span class="login-logo">V×</span><div><b>VoltX</b><small>SOLAR VISION</small></div></div><div class="login-message"><span class="login-kicker">SMART SOLAR INTELLIGENCE</span><h1>See the loss.<br>Find the cause.<br><em>Act early.</em></h1><p>Monitor solar generation performance and investigate energy shortfalls from one workspace.</p></div><div class="login-foot">VOLT X SOLAR VISION <span>•</span> ENERGY INSIGHTS</div></div>
+    <div class="login-panel-wrap"><form class="login-panel" id="loginForm" novalidate><div class="login-mobile-brand"><span class="login-logo">V×</span><b>VoltX Solar Vision</b></div><span class="login-kicker">WELCOME BACK</span><h2 id="loginTitle">Sign in to your workspace</h2><p class="login-subtitle">Enter your account details to continue.</p>
+      <label for="loginRole">Account type</label><select id="loginRole" name="role"><option value="user">Solar Operator</option><option value="admin">Administrator</option></select>
+      <label for="loginUsername">Username</label><input id="loginUsername" name="username" autocomplete="username" placeholder="Enter username" required>
+      <label for="loginPassword">Password</label><div class="password-wrap"><input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required><button type="button" id="togglePassword" aria-label="Show password">Show</button></div>
+      <p class="login-error" id="loginError" role="alert" aria-live="polite"></p><button class="login-submit" type="submit">Sign in <span>→</span></button><p class="login-hint">For local UI testing: user <b>operator</b> / <b>VoltX@123</b>; admin <b>admin</b> / <b>Admin@123</b>.</p><p class="login-security-note">Local preview credentials only. Connect the Java backend and MySQL before using real accounts.</p>
+    </form></div>
+  </section>
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">V<span>×</span></div>
+        <div><strong>VoltX</strong><small>SOLAR VISION</small></div>
+      </div>
+      <div class="site-label">WORKSPACE</div>
+      <button class="nav-link active" data-page="overview"><span>◫</span> Overview</button>
+      <button class="nav-link" data-page="diagnostics"><span>⌁</span> Diagnostics <i id="navAlertCount">1</i></button>
+      <button class="nav-link" data-page="readings"><span>▤</span> Generation readings</button>
+      <button class="nav-link" data-page="reports"><span>▥</span> Reports</button>
+      <div class="sidebar-bottom">
+        <button class="nav-link" data-page="settings"><span>⚙</span> Settings</button>
+        <div class="profile"><div class="avatar">VX</div><div><b id="profileName">Solar Operator</b><small id="profileRole">Solar operator</small></div><button id="switchUser" title="Sign out">↪</button></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-button" id="menuButton" aria-label="Toggle menu">☰</button>
+        <div class="crumb">Workspace <span>/</span> <b id="pageCrumb">Overview</b></div>
+        <div class="top-actions"><button class="icon-button" id="refreshButton" title="Refresh database readings">↻</button><div class="avatar small">VX</div></div>
+      </header>
+
+      <section class="page active" id="page-overview">
+        <div class="welcome-row">
+          <div><div class="eyebrow">SOLAR PERFORMANCE MONITORING</div><h1>Solar overview<span>.</span></h1><p>See what your solar system should produce — and where performance may be slipping.</p></div>
+          <button class="primary-button" id="newReadingButton">＋ Add reading</button>
+        </div>
+        <div class="site-strip"><div class="site-icon">☼</div><div><b>Rooftop Solar · Site A</b><small>Rooftop installation <span>•</span> 10 kW capacity</small></div><div class="site-strip-right"><span class="status-dot"></span> Monitoring active</div></div>
+
+        <div class="metric-grid">
+          <article class="metric-card"><div class="metric-head"><span>Today's generation</span><span class="metric-icon mint">ϟ</span></div><div class="metric-value"><strong id="actualMetric">14.0</strong><span>kWh</span></div><div class="metric-foot"><span class="down">↓ 30%</span> vs expected generation</div></article>
+          <article class="metric-card"><div class="metric-head"><span>Expected generation</span><span class="metric-icon blue">◷</span></div><div class="metric-value"><strong id="expectedMetric">20.0</strong><span>kWh</span></div><div class="metric-foot">Based on your entered target</div></article>
+          <article class="metric-card"><div class="metric-head"><span>Energy gap</span><span class="metric-icon amber">!</span></div><div class="metric-value"><strong id="lossMetric">6.0</strong><span>kWh</span></div><div class="metric-foot">Potential generation shortfall</div></article>
+          <article class="metric-card"><div class="metric-head"><span>Performance score</span><span class="metric-icon violet">↗</span></div><div class="metric-value"><strong id="performanceMetric">70</strong><span>%</span></div><div class="progress"><span id="performanceBar" style="width:70%"></span></div><div class="metric-foot">Actual ÷ expected generation</div></article>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel chart-panel">
+            <div class="panel-heading"><div><h2>Generation performance</h2><p>Expected output compared with actual output</p></div><span class="select-like">Today ▾</span></div>
+            <div class="chart-legend"><span><i class="legend-blue"></i> Expected</span><span><i class="legend-mint"></i> Actual</span></div>
+            <div class="bar-chart" aria-label="Expected and actual generation chart">
+              <div class="chart-y"><span>20</span><span>15</span><span>10</span><span>5</span><span>0</span></div>
+              <div class="chart-main">
+                <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="bar-groups" id="barGroups"></div>
+                <div class="chart-x"><span>Morning</span><span>Midday</span><span>Afternoon</span><span>Evening</span></div>
+              </div>
+            </div>
+            <div class="chart-note"><span class="note-icon">i</span> Sample chart data for presentation. Connect inverter readings for live results.</div>
+          </article>
+
+          <article class="panel alert-panel">
+            <div class="panel-heading"><div><h2>Needs attention</h2><p>Rule-based performance checks</p></div><span class="count-badge" id="alertCount">1</span></div>
+            <div id="alertList" class="alert-list"></div>
+            <button class="text-button" data-goto="diagnostics">Review diagnostics <span>→</span></button>
+          </article>
+        </div>
+
+        <div class="content-grid lower-grid">
+          <article class="panel">
+            <div class="panel-heading"><div><h2>Diagnostic checklist</h2><p>Record observations to narrow down possible causes</p></div><span class="tag">Weather-independent</span></div>
+            <div class="check-grid">
+              <label class="check-item"><input type="checkbox" id="dustCheck"><span class="check-symbol">◌</span><span><b>Panel dust / dirt</b><small>Visible deposits or overdue cleaning</small></span></label>
+              <label class="check-item"><input type="checkbox" id="shadeCheck"><span class="check-symbol">▨</span><span><b>Shading observed</b><small>Trees, buildings or new obstacles</small></span></label>
+              <label class="check-item"><input type="checkbox" id="inverterCheck"><span class="check-symbol">ϟ</span><span><b>Inverter warning</b><small>Fault code or warning indicator</small></span></label>
+              <label class="check-item"><input type="checkbox" id="wiringCheck"><span class="check-symbol">⌁</span><span><b>Wiring / connection concern</b><small>Needs qualified inspection</small></span></label>
+            </div>
+            <button class="secondary-button" id="runDiagnosticButton">Run diagnostic check</button>
+          </article>
+          <article class="panel insight-panel"><div class="insight-top"><div class="insight-icon">✳</div><span class="tag">Next best action</span></div><h2 id="recommendationTitle">Inspect the panel surface</h2><p id="recommendationText">Record visible dust or shading, then compare the next generation reading. Do not assume a cause without evidence.</p><div class="insight-foot"><span>Based on entered readings & observations</span></div></article>
+        </div>
+        <footer>VOLT X SOLAR VISION <span>•</span> SOLAR PERFORMANCE MONITORING</footer>
+      </section>
+
+      <section class="page" id="page-diagnostics">
+        <div class="welcome-row"><div><div class="eyebrow">PERFORMANCE INVESTIGATION</div><h1>Diagnostics<span>.</span></h1><p>Identify possible causes from recorded observations — not from weather alone.</p></div></div>
+        <div class="panel form-panel">
+          <div class="panel-heading"><div><h2>Analyze a generation reading</h2><p>Enter values and select only observations you can support.</p></div><span class="tag">Rule-based</span></div>
+          <form id="analysisForm">
+            <div class="input-grid">
+              <label>Expected generation (kWh)<input id="expectedInput" type="number" min="0.1" step="0.1" value="20" required></label>
+              <label>Actual generation (kWh)<input id="actualInput" type="number" min="0" step="0.1" value="14" required></label>
+              <label>Installed capacity (kW)<input id="capacityInput" type="number" min="0.1" step="0.1" value="10" required></label>
+              <label>Reading date<input id="readingDate" type="date" required></label>
+            </div>
+            <h3 class="form-subtitle">Equipment observations</h3>
+            <div class="check-grid diagnostics-checks">
+              <label class="check-item"><input type="checkbox" id="dustCheck2"><span class="check-symbol">◌</span><span><b>Dust / dirt visible</b><small>Panel surface needs inspection</small></span></label>
+              <label class="check-item"><input type="checkbox" id="shadeCheck2"><span class="check-symbol">▨</span><span><b>Shading observed</b><small>Partial obstruction present</small></span></label>
+              <label class="check-item"><input type="checkbox" id="inverterCheck2"><span class="check-symbol">ϟ</span><span><b>Inverter warning</b><small>Warning light or code recorded</small></span></label>
+              <label class="check-item"><input type="checkbox" id="wiringCheck2"><span class="check-symbol">⌁</span><span><b>Wiring concern</b><small>Needs qualified inspection</small></span></label>
+            </div>
+            <button class="primary-button" type="submit">Calculate & save demo reading →</button>
+          </form>
+        </div>
+        <div class="panel result-panel" id="diagnosticResult" aria-live="polite">
+          <div class="result-header"><div><span class="eyebrow">LATEST ANALYSIS</span><h2 id="resultTitle">Low generation detected</h2></div><span class="status-warning" id="resultStatus">ATTENTION</span></div>
+          <div class="result-metrics"><div><small>Energy gap</small><b id="resultLoss">6.0 kWh</b></div><div><small>Shortfall</small><b id="resultGap">30.0%</b></div><div><small>Performance</small><b id="resultPerformance">70.0%</b></div></div>
+          <h3>Possible next checks</h3><ul id="resultCauses"></ul>
+          <p class="disclaimer">This is a rule-based demo. A checkbox is a user-reported observation, not a sensor-confirmed fault. If no evidence is entered, the cause remains unknown. Electrical inspection must be done by a qualified person.</p>
+        </div>
+      </section>
+
+      <section class="page" id="page-readings">
+        <div class="welcome-row"><div><div class="eyebrow">HISTORY</div><h1>Generation readings<span>.</span></h1><p>Review readings created during this browser demo.</p></div><button class="primary-button" id="readingsAddButton">＋ Add reading</button></div>
+        <div class="panel table-panel"><div class="panel-heading"><div><h2>Recent readings</h2><p>Demo data is saved in this browser only.</p></div><span class="tag">Local demo</span></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Expected</th><th>Actual</th><th>Gap</th><th>Performance</th><th>Status</th></tr></thead><tbody id="readingsTable"></tbody></table></div></div>
+      </section>
+
+      <section class="page" id="page-reports">
+        <div class="welcome-row"><div><div class="eyebrow">SUMMARY</div><h1>Reports<span>.</span></h1><p>A quick summary of your current demonstration data.</p></div><button class="secondary-button" id="downloadReport">↓ Download CSV</button></div>
+        <div class="metric-grid report-grid"><article class="metric-card"><div class="metric-head">Readings recorded</div><div class="metric-value"><strong id="reportCount">1</strong></div><div class="metric-foot">In this browser session</div></article><article class="metric-card"><div class="metric-head">Average performance</div><div class="metric-value"><strong id="reportPerformance">70</strong><span>%</span></div><div class="metric-foot">Across saved demo readings</div></article><article class="metric-card"><div class="metric-head">Total energy gap</div><div class="metric-value"><strong id="reportLoss">6.0</strong><span>kWh</span></div><div class="metric-foot">Shortfalls only</div></article></div>
+        <div class="panel"><h2>How to interpret this report</h2><p class="muted">Performance figures help identify readings that need review. They do not prove a physical fault. Validate expected generation and equipment observations before taking action.</p></div>
+      </section>
+
+      <section class="page" id="page-settings">
+        <div class="welcome-row"><div><div class="eyebrow">DATABASE CONFIGURATION</div><h1>Settings<span>.</span></h1><p>Connection status and project information.</p></div></div>
+        <div class="panel settings-panel"><h2>VoltX Solar Vision</h2><p>Generation readings are loaded from and saved to MySQL through the local Java backend.</p><div class="setting-row"><span>Database connection</span><b id="dataConnection" class="connection-status">Checking…</b></div><div class="setting-row"><span>Frontend</span><b>HTML · CSS · JavaScript</b></div><div class="setting-row"><span>Backend</span><b>Java HTTP API</b></div><div class="setting-row"><span>Database</span><b>MySQL</b></div><div class="setting-row"><span>Sign-in</span><b class="muted">Local preview only; not database authentication</b></div><div class="setting-row"><span>Live inverter connection</span><b class="muted">Not connected</b></div><div class="setting-row"><span>Weather dependency</span><b>None for diagnostics</b></div><button class="secondary-button" id="clearDemo">Refresh database readings</button></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="readingModal">
+    <div class="modal">
+      <button class="modal-close" id="closeModal" aria-label="Close">×</button>
+      <div class="eyebrow">NEW READING</div><h2>Add generation reading</h2><p class="muted">This saves a reading to the connected MySQL database.</p>
+      <form id="quickForm"><label>Expected generation (kWh)<input type="number" id="quickExpected" min="0.1" step="0.1" value="20" required></label><label>Actual generation (kWh)<input type="number" id="quickActual" min="0" step="0.1" value="14" required></label><label>Reading date<input type="date" id="quickDate" required></label><button class="primary-button" type="submit">Save reading</button></form>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

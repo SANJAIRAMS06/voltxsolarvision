@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch VoltX",
+      "request": "launch",
+      "mainClass": "local.voltx.VoltxServer",
+      "projectName": "voltx-backend",
+      "cwd": "${workspaceFolder}\\backend",
+      "preLaunchTask": "VoltX: Compile",
+      "env": {
+        "MYSQL_URL": "jdbc:mysql://127.0.0.1:3306/voltx?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC",
+        "MYSQL_USER": "root",
+        "MYSQL_PASSWORD": "",
+        "VOLTX_WEB_ROOT": "${workspaceFolder}"
+      }
+    }
+  ]
+}

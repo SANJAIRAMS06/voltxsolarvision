@@ -1,0 +1,4 @@
+{
+  "java.debug.settings.forceBuildBeforeLaunch": false,
+  "maven.executable.path": "C:\\Users\\sanja\\Downloads\\VoltX_Frontend_Demo\\Tools\\apache-maven-3.10.0\\bin\\mvn.cmd"
+}

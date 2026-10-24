@@ -1,0 +1,61 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "VoltX: Compile",
+			"type": "shell",
+			"command": "${workspaceFolder}\\Tools\\apache-maven-3.10.0\\bin\\mvn.cmd",
+			"args": [
+				"-f",
+				"${workspaceFolder}\\backend\\pom.xml",
+				"compile"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "VoltX: Run with XAMPP",
+			"type": "shell",
+			"command": "powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"C:\\Users\\sanja\\Downloads\\VoltX_Frontend_Demo\\backend\\run.ps1"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "VoltX: Restart XAMPP Connected Web App",
+			"type": "shell",
+			"command": "powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"C:\\Users\\sanja\\Downloads\\VoltX_Frontend_Demo\\backend\\run.ps1"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "VoltX: Launch With XAMPP Database Diagnostics",
+			"type": "shell",
+			"command": "powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"C:\\Users\\sanja\\Downloads\\VoltX_Frontend_Demo\\backend\\run.ps1"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}
